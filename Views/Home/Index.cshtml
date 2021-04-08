@@ -1,0 +1,39 @@
+﻿@using MeterReading.ViewModels
+@model UploadViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<fieldset class="ml-md-12">Upload File</fieldset>
+
+
+@using(Html.BeginForm("","", FormMethod.Post, new { id = "UploadFileForm"}))
+{
+    <div class="container-fluid">
+        <div id="dropContainer">
+            Drop your file here (Only support CSV file)
+        </div>
+        <input type="file" id="fileUpload" />
+        <a id="UploadFile" href="#" onclick="UploadFile(); return flase;" class="btn btn-success">Upload</a>
+    </div>
+    <div class="container-fluid">
+        <fieldset>
+            <legend>Uploaded file</legend>
+            <ul id="uploadResult"></ul>
+        </fieldset>
+    </div>
+
+}
+
+<script>
+    function UploadFile() {
+
+        $('dropContainer').filedrop({
+            url: '@Url.Action("UploadFile", "Home")',
+            paramname: 'files',
+            allowedfileextensions: ['.csv'],
+            error: alert('Upload failed')
+        })
+    }
+</script>
